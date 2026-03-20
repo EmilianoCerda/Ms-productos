@@ -9,7 +9,14 @@ import com.example.ms_productos.repository.ProductosRepository;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+
 
 @RestController
 @RequestMapping("/api/productos")
@@ -27,8 +34,33 @@ public class ProductosController {
     }
     @GetMapping("/mostrar")
     public List<Productos> mostrarTodo(){
-        return datos.mostrar();
+        return datos.obtenerTodos();
     }
+    @GetMapping("path")
+    public Productos getMethodName(@RequestParam int id) {
+        return datos.buscarporId(id);
+    }
+    @GetMapping("/id")
+    public ResponseEntity<Productos> buscarProducto(@PathVariable int id){
+        Productos productoencontrado = datos.buscarporId(id);
+        if (productoencontrado != null){
+            return ResponseEntity.ok(productoencontrado);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @PostMapping("/post")
+    public ResponseEntity<?> crearProducto(@RequestBody Productos entity) {
+        //TODO: process POST request
+        
+        return ;
+    }
+    
+
+    
+    
+    
+    
     
     
     
